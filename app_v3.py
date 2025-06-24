@@ -98,72 +98,25 @@ input, textarea {
     background-color: #374151;
     color: #a855f7;
 }
-
-/* Custom button styles for landing page */
-.landing-button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    background: linear-gradient(to right, #a855f7, #6366f1);
-    border: none;
-    color: white;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.cta-button {
-    background-color: white;
-    color: #4f46e5;
-    padding: 0.75rem 1.5rem;
-    font-weight: bold;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
 </style>
 """, unsafe_allow_html=True)
 
 def landing_page():
-    # Create columns for the navbar buttons
-    col1, col2, col3 = st.columns([6, 1, 1])
-    
-    with col1:
-        st.markdown("""
-        <div style="display: flex; align-items: center; padding: 1.2rem 0;">
-            <h1 style="font-size: 1.5rem; display: flex; align-items: center; margin: 0;">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="28" style="margin-right: 10px;"> 
-                NeuroNest
-            </h1>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        if st.button("Sign In", key="navbar_signin"):
-            st.session_state.page = "auth"
-            st.rerun()
-    
-    with col3:
-        if st.button("Get Started", key="navbar_getstarted"):
-            st.session_state.page = "auth"
-            st.rerun()
-    
     st.markdown("""
+    <div class="navbar">
+        <h1><img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="28"> NeuroNest</h1>
+        <div>
+            <a href="#" onclick="fetch('/_stcore/streamlit/setComponentValue?name=page&value=auth');window.location.reload();">Sign In</a>
+            <a href="#" onclick="fetch('/_stcore/streamlit/setComponentValue?name=page&value=auth');window.location.reload();">Get Started</a>
+        </div>
+    </div>
     <div style="text-align: center; padding: 0.5rem 2rem;">
         <h1 style="font-size: 2.6rem; font-weight: 800;">Transform Your Notes Into <span style='color:#a855f7'>Vivid Memory <br>Palaces</span></h1>
         <p style="color: #d1d5db; font-size: 1.1rem;">Use AI-powered storytelling to turn any concept into an unforgettable visual journey. Remember more,<br> forget less.</p>
         <br>
         <form><input placeholder="What would you like to remember? (e.g., components of a plant cell)" style="padding: 1rem; width: 100%; max-width: 600px;"></form>
+        <div style="margin-top: 1rem;"><button onclick="fetch('/_stcore/streamlit/setComponentValue?name=page&value=auth');window.location.reload();" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(to right, #a855f7, #6366f1); border: none; color: white; border-radius: 8px; font-weight: bold;">Sign In To Create</button></div>
     </div>
-    """, unsafe_allow_html=True)
-    
-    # Sign In To Create button
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("Sign In To Create", key="signin_to_create", use_container_width=True):
-            st.session_state.page = "auth"
-            st.rerun()
-    
-    st.markdown("""
     <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 1rem; gap: 2rem; padding: 0 2rem;">
         <div class="card" style="width: 300px; text-align: center;">
             <img src="https://img.icons8.com/ios-filled/50/ffffff/storytelling.png" width="48" />
@@ -181,24 +134,13 @@ def landing_page():
             <p>Save, revisit, and organize your memory palaces in one place.</p>
         </div>
     </div>
-    """, unsafe_allow_html=True)
-    
-    # Final CTA section
-    st.markdown("""
     <div class="card" style="margin-top: 1rem; text-align: center;">
         <h2>Ready to Remember Everything?</h2>
-        <p>Join thousands who've transformed their memory with NeuroNest.</p>
+        <p>Join thousands who’ve transformed their memory with NeuroNest.</p>
+        <button onclick="fetch('/_stcore/streamlit/setComponentValue?name=page&value=auth');window.location.reload();" style="margin-top: 1rem; background-color: white; color: #4f46e5; padding: 0.75rem 1.5rem; font-weight: bold; border-radius: 8px; border: none;">Start Your Journey</button>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Start Your Journey button
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("Start Your Journey", key="start_journey", use_container_width=True):
-            st.session_state.page = "auth"
-            st.rerun()
 
-    # Keep the original continue button as well
     if st.button("Continue to Login / Signup"):
         st.session_state.page = "auth"
         st.rerun()
