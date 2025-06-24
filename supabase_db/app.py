@@ -184,7 +184,7 @@ def landing_page():
     <div class="animated-header">
         <div class="animated-logo">
             <img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="60" class="brain-icon"> 
-            <h1 style="font-size: 5rem" class="app-title">NeuroNest</h1>
+            <h1 style="font-size: 4rem" class="app-title">NeuroNest</h1>
         </div>
     </div>
     """, unsafe_allow_html=True)
