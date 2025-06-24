@@ -75,6 +75,17 @@ body, .stApp {
     max-width: 480px;
     margin: 4rem auto;
 }
+
+.auth-card {
+    background-color: #111827;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    color: white;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
 input, textarea {
     background-color: #1f2937 !important;
     color: white !important;
@@ -120,12 +131,21 @@ input, textarea {
     border: none;
     cursor: pointer;
 }
+
+/* Center the login/signup form */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 2rem;
+}
 </style>
 """, unsafe_allow_html=True)
 
 def landing_page():
-    # Create columns for the navbar buttons
-    col1, col2, col3 = st.columns([6, 1, 1])
+    # Create columns for the navbar buttons - keeping Sign In and Get Started close together
+    col1, col2, col3, col4 = st.columns([5, 1, 1, 1])
     
     with col1:
         st.markdown("""
@@ -137,15 +157,15 @@ def landing_page():
         </div>
         """, unsafe_allow_html=True)
     
-    with col2:
-        if st.button("Sign In", key="navbar_signin"):
-            st.session_state.page = "auth"
-            st.rerun()
+    # with col3:
+    #     if st.button("Sign In", key="navbar_signin"):
+    #         st.session_state.page = "auth"
+    #         st.rerun()
     
-    with col3:
-        if st.button("Get Started", key="navbar_getstarted"):
-            st.session_state.page = "auth"
-            st.rerun()
+    # with col4:
+    #     if st.button("Get Started", key="navbar_getstarted"):
+    #         st.session_state.page = "auth"
+    #         st.rerun()
     
     st.markdown("""
     <div style="text-align: center; padding: 0.5rem 2rem;">
@@ -156,8 +176,8 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
     
-    # Sign In To Create button
-    col1, col2, col3 = st.columns([1, 2, 1])
+    # Sign In To Create button - reduced width
+    col1, col2, col3 = st.columns([2, 1, 2])
     with col2:
         if st.button("Sign In To Create", key="signin_to_create", use_container_width=True):
             st.session_state.page = "auth"
@@ -183,51 +203,71 @@ def landing_page():
     </div>
     """, unsafe_allow_html=True)
     
-    # Final CTA section
+    # Final CTA section with Start Your Journey button inside the card
     st.markdown("""
     <div class="card" style="margin-top: 1rem; text-align: center;">
         <h2>Ready to Remember Everything?</h2>
         <p>Join thousands who've transformed their memory with NeuroNest.</p>
-    </div>
     """, unsafe_allow_html=True)
     
-    # Start Your Journey button
-    col1, col2, col3 = st.columns([1, 2, 1])
+    # Start Your Journey button inside the card - reduced width
+    col1, col2, col3 = st.columns([2, 1, 2])
     with col2:
         if st.button("Start Your Journey", key="start_journey", use_container_width=True):
             st.session_state.page = "auth"
             st.rerun()
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Keep the original continue button as well
-    if st.button("Continue to Login / Signup"):
-        st.session_state.page = "auth"
-        st.rerun()
+    # if st.button("Continue to Login / Signup"):
+    #     st.session_state.page = "auth"
+    #     st.rerun()
 
 def login_signup_page():
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.markdown("### Please SignUp or Login to Continue")
-    tab1, tab2 = st.tabs(["Login", "Sign Up"])
-    with tab1:
-        email = st.text_input("Email", key="login_email")
-        password = st.text_input("Password", type="password", key="login_pass")
-        if st.button("Sign In"):
-            user_id = authenticate(email, password)
-            if user_id:
-                st.session_state.user_id = user_id
-                st.session_state.username = email
-                st.session_state.page = "app"
-                st.rerun()
-            else:
-                st.error("Invalid credentials")
-    with tab2:
-        email = st.text_input("Email", key="signup_email")
-        password = st.text_input("Password", type="password", key="signup_pass")
-        if st.button("Sign Up"):
-            if create_user(email, password):
-                st.success("Account created! Please log in.")
-            else:
-                st.error("Email already registered.")
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Create a container to center the form
+    # st.markdown('<div class="auth-container">', unsafe_allow_html=True)
+    
+    # Use columns to center the form
+    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    with col2:
+        # st.markdown("<div class='auth-card'>", unsafe_allow_html=True)
+        st.markdown("### Please SignUp or Login to Continue")
+        
+        tab1, tab2 = st.tabs(["Login", "Sign Up"])
+        
+        with tab1:
+            email = st.text_input("Email", key="login_email")
+            password = st.text_input("Password", type="password", key="login_pass")
+            if st.button("Sign In", use_container_width=True):
+                user_id = authenticate(email, password)
+                if user_id:
+                    st.session_state.user_id = user_id
+                    st.session_state.username = email
+                    st.session_state.page = "app"
+                    st.rerun()
+                else:
+                    st.error("Invalid credentials")
+        
+        with tab2:
+            email = st.text_input("Email", key="signup_email")
+            password = st.text_input("Password", type="password", key="signup_pass")
+            if st.button("Sign Up", use_container_width=True):
+                if create_user(email, password):
+                    st.success("Account created! Please log in.")
+                else:
+                    st.error("Email already registered.")
+        
+        # Add a back to home button
+        st.markdown("---")
+        if st.button("← Back to Home", key="back_to_home", use_container_width=True):
+            st.session_state.page = "landing"
+            st.rerun()
+            
+        st.markdown("</div>", unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def build_memory_palace_ui():
     st.subheader("🧠 Build a New Memory Palace")
