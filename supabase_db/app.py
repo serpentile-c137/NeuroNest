@@ -37,30 +37,55 @@ body, .stApp {
     padding: 1rem;
 }
 
-.navbar {
+/* Animated Logo Styles */
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(5deg); }
+    66% { transform: translateY(5px) rotate(-3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7; }
+    50% { text-shadow: 0 0 10px #6366f1, 0 0 20px #6366f1, 0 0 30px #6366f1; }
+    100% { text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.animated-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 1.2rem 2rem;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
 }
-.navbar h1 {
-    font-size: 1.5rem;
+
+.animated-logo {
     display: flex;
     align-items: center;
-    margin: 0;
+    justify-content: center;
+    gap: 15px;
 }
-.navbar img { margin-right: 10px; }
-.navbar a {
-    margin-left: 1.5rem;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
+
+.brain-icon {
+    animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px #a855f7);
 }
-.navbar a:hover {
-    color: #a855f7;
-    background-color: #374151;
+
+.app-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #a855f7, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 2s ease-in-out infinite alternate;
+    letter-spacing: 2px;
 }
 
 .stButton>button {
@@ -154,17 +179,15 @@ input, textarea {
 
 def landing_page():
     """Landing page with hero section and features"""
-    col1, col2, col3, col4 = st.columns([5, 1, 1, 1])
-    
-    with col1:
-        st.markdown("""
-        <div style="display: flex; align-items: center; padding: 1.2rem 0;">
-            <h1 style="font-size: 1.5rem; display: flex; align-items: center; margin: 0;">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="28" style="margin-right: 10px;"> 
-                NeuroNest
-            </h1>
+    # Animated Header with centered logo
+    st.markdown("""
+    <div class="animated-header">
+        <div class="animated-logo">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="60" class="brain-icon"> 
+            <h1 style="font-size: 5rem" class="app-title">NeuroNest</h1>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("""
     <div style="text-align: center; padding: 0.5rem 2rem;">
@@ -217,6 +240,16 @@ def landing_page():
 
 def login_signup_page():
     """Login and signup page"""
+    # Animated Header for auth page too
+    st.markdown("""
+    <div class="animated-header">
+        <div class="animated-logo">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/brain.png" width="40" class="brain-icon"> 
+            <h1 class="app-title">NeuroNest</h1>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
@@ -328,7 +361,7 @@ def show_selected_palace(palace):
         st.markdown("---")
         
         # Display the palace story
-        # st.markdown('<div class="palace-content">', unsafe_allow_html=True)
+        st.markdown('<div class="palace-content">', unsafe_allow_html=True)
         st.markdown(palace[2])
         st.markdown('</div>', unsafe_allow_html=True)
         
@@ -342,7 +375,7 @@ def show_selected_palace(palace):
                 st.rerun()
         
         if hasattr(st.session_state, 'current_quiz') and st.session_state.current_quiz:
-            # st.markdown('<div class="quiz-section">', unsafe_allow_html=True)
+            st.markdown('<div class="quiz-section">', unsafe_allow_html=True)
             st.markdown(st.session_state.current_quiz)
             st.markdown('</div>', unsafe_allow_html=True)
             
