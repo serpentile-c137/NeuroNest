@@ -361,7 +361,7 @@ def show_selected_palace(palace):
         st.markdown("---")
         
         # Display the palace story
-        st.markdown('<div class="palace-content">', unsafe_allow_html=True)
+        # st.markdown('<div class="palace-content">', unsafe_allow_html=True)
         st.markdown(palace[2])
         st.markdown('</div>', unsafe_allow_html=True)
         
